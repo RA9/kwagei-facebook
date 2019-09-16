@@ -11,27 +11,27 @@
     <div class="container">
         <h1>Kwagei Facebook</h1>
         <div id="buttons">
-            <button id="add-contact">Add New Contact</button>
-            <button id="edit-contact">Edit</button>
-            <button id="delete-contact">Delete</button>
+            <button id="add-contact" onclick="kwageiFacebook.addButtonHandler()">Add New Contact</button>
+            <button id="edit-contact" onclick="kwageiFacebook.editButtonHandler()">Edit</button>
+            <button id="delete-contact" onclick="kwageiFacebook.deleteButtonHandler()">Delete</button>
         </div>
 
         <div id="add" class="hide">
             <input type="text" id="firstname" placeholder="Enter your firstname">
             <input type="text" id="lastname" placeholder="Enter your lastname">
             <input type="text" id="contact" placeholder="Enter your Contact">
-            <button id="add-name">Add</button>
+            <button id="add-name" onclick="kwageiFacebook.addContactHandler()">Add</button>
         </div>
         <div id="delete" class="hide">
                 <input type="number" id="delete-position" placeholder="Enter the delete position">
-                <button id="delete-name">Delete</button>
+                <button id="delete-name" onclick="kwageiFacebook.deleteContactHandler()">Delete</button>
         </div>
         <div id="edit" class="hide">
                 <input type="number" id="edit-position" placeholder="Enter the position to edit">
                 <input type="text" id="edit-firstname" placeholder="Enter your firstname">
                 <input type="text" id="edit-lastname" placeholder="Enter your lastname">
                 <input type="text" id="editContact" placeholder="Enter your Contact">
-                <button id="edit-name">Edit</button>
+                <button id="edit-name" onclick="kwageiFacebook.editContactHandler()">Edit</button>
         </div>
 
         <table border="1" id="table-container">

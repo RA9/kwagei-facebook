@@ -16,23 +16,21 @@ const deleteButton = document.querySelector("#delete-contact");
 const deleteName = document.querySelector("#delete-name");
 
 
-
-// Arrays of name objects
-let contactNames = [
-    { firstname: "Nathan", lastname: "Siafa", contact: "0776728619" },
-    { firstname: "Emmanuel", lastname: "Jaygbay", contact: "0776728619" },
-    { firstname: "Rudeen", lastname: "Zarwolo", contact: "0776728619" },
-    { firstname: "Carlos", lastname: "Nah", contact: "0776728619" },
-    { firstname: "Kpetermani", lastname: "Siakor", contact: "0776728619" }
-]
-
-const displayNames = () => {
-    let countNo = 0;
-    tableContainer.innerHTML = ' ';
-    for (let i = 0; i < contactNames.length; i++) {
-        const element = contactNames[i];
-        countNo += 1
-        tableContainer.innerHTML += `
+const kwageiFacebook = {
+    "contactNames": [
+        { firstname: "Nathan", lastname: "Siafa", contact: "0776728619" },
+        { firstname: "Emmanuel", lastname: "Jaygbay", contact: "0776728619" },
+        { firstname: "Rudeen", lastname: "Zarwolo", contact: "0776728619" },
+        { firstname: "Carlos", lastname: "Nah", contact: "0776728619" },
+        { firstname: "Kpetermani", lastname: "Siakor", contact: "0776728619" }
+    ],
+    "displayNames": function () {
+        let countNo = 0;
+        tableContainer.innerHTML = ' ';
+        for (let i = 0; i < this.contactNames.length; i++) {
+            const element = this.contactNames[i];
+            countNo += 1
+            tableContainer.innerHTML += `
             <tr>
                 <td>${countNo}</td>
                 <td>${element.firstname}</td>
@@ -40,114 +38,107 @@ const displayNames = () => {
                 <td> ${element.contact} </td>
             </tr>
             `;
-    };
-
-}
-
-const deleteContactName = (position) => {
-    contactNames.splice(parseInt(position, 10) - 1, 1)
-    console.log(contactNames, parseInt(position, 10))
-}
-
-const addContactNames = (first, last, contact) => {
-    contactNames.push({ firstname: first.trim(), lastname: last.trim(), contact: contact.trim() });
-}
-
-const editContactName = (pos, first, last, con) => {
-    for (let i = 0; i < contactNames.length; i++) {
-        //console.log(parseInt(numPosition, 10) === i, i)
-        if (parseInt(pos, 10) - 1 === i) {
-            
-            contactNames[i].firstname = first;
-            contactNames[i].lastname = last;
-            contactNames[i].contact = con;
-
-
+        };
+    },
+    "addButtonHandler": function () {
+        addContainer.classList.remove("hide");
+        addContainer.classList.add("show");
+        editContainer.classList.add("hide");
+        editContainer.classList.remove("show");
+        deleteContainer.classList.add("hide");
+        deleteContainer.classList.remove("show");
+    },
+    "addContactNames": function (first, last, contact) {
+        this.contactNames.push({ firstname: first.trim(), lastname: last.trim(), contact: contact.trim() });
+    },
+    "addContactHandler": function () {
+        const firstname = document.querySelector("#firstname");
+        const lastname = document.querySelector("#lastname");
+        const contact = document.querySelector("#contact");
+        if (firstname.value !== "" && lastname.value !== "" && contact.value !== "") {
+            this.addContactNames(firstname.value, lastname.value, contact.value);
+            this.displayNames();
+            addContainer.classList.remove("show");
+            addContainer.classList.add("hide");
+            firstname.value = null;
+            lastname.value = null;
+            contact.value = null;
+        } else {
+            addContainer.classList.remove("show");
+            addContainer.classList.add("hide");
+            firstname.value = null;
+            lastname.value = null;
+            contact.value = null;
         }
-    }
+        console.log(this.contactNames);
 
+    },
+    "editContactName": function (pos, first, last, con) {
+        let i = Number(pos);
+        this.contactNames[i].firstname = first;
+        this.contactNames[i].lastname = last;
+        this.contactNames[i].contact = con;
+    },
+    "editButtonHandler": function () {
+        editContainer.classList.remove("hide");
+        editContainer.classList.add("show");
+        addContainer.classList.add("hide");
+        addContainer.classList.remove("show");
+        deleteContainer.classList.add("hide");
+        deleteContainer.classList.remove("show");
+    },
+    "editContactHandler": function () {
+        let editPosition = document.querySelector("#edit-position");
+        let editFirstName = document.querySelector("#edit-firstname");
+        let editLastName = document.querySelector("#edit-lastname");
+        let editContact = document.querySelector("#editContact");
+        editContainer.classList.add("hide");
+        editContainer.classList.remove("show");
+        console.log(editContact.value);
+        let numPosition = editPosition.value - 1;
+        if (editFirstName.value === "") {
+            editFirstName.value = this.contactNames[numPosition].firstname;
+        }
+        if (editLastName.value === "") {
+            editLastName.value = this.contactNames[numPosition].lastname;
+        }
+        if (editContact.value === "") {
+            editContact.value = this.contactNames[numPosition].contact;
+            console.log(editContact.value)
+        }
+        console.log(numPosition)
+        this.editContactName(numPosition, editFirstName.value, editLastName.value, editContact.value);
+        console.log(this.contactNames)
+        this.displayNames();
+        editPosition.value = null;
+        editFirstName.value = null;
+        editLastName.value = null;
+        editContact.value = null;
+    },
+    "deleteButtonHandler": function() {
+        editContainer.classList.remove("show");
+        editContainer.classList.add("hide");
+        addContainer.classList.add("hide");
+        addContainer.classList.remove("show");
+        deleteContainer.classList.add("show");
+        deleteContainer.classList.remove("hide");
+    },
+    "deleteContactName": function (position) {
+        this.contactNames.splice(parseInt(position, 10) - 1, 1)
+
+    },
+    "deleteContactHandler": function() {
+        const deletePosition = document.querySelector("#delete-position");
+        this.deleteContactName(deletePosition.value);
+        deleteContainer.classList.add("hide");
+        deleteContainer.classList.remove("show");
+        this.displayNames();
+        deletePosition.value = "";
+    }
 }
 
 
-// Add functionalities
-addButton.addEventListener("click", function () {
-    addContainer.style.display = "block";
-    editContainer.style.display = "none";
-    deleteContainer.style.display = "none";
-})
 
-addName.addEventListener("click", function () {
-    const firstname = document.querySelector("#firstname");
-    const lastname = document.querySelector("#lastname");
-    const contact = document.querySelector("#contact");
-    addContactNames(firstname.value, lastname.value, contact.value);
-    addContainer.style.display = "none";
-    console.log(contactNames);
-    displayNames();
-    firstname.value = null;
-    lastname.value = null;
-    contact.value = null;
-
-});
-
-
-// Edit functionalities
-editButton.addEventListener("click", function () {
-    editContainer.style.display = "block";
-    addContainer.style.display = "none";
-    deleteContainer.style.display = "none";
-})
-
-editName.addEventListener("click", function () {
-    let editPosition = document.querySelector("#edit-position");
-    let editFirstName = document.querySelector("#edit-firstname");
-    let editLastName = document.querySelector("#edit-lastname");
-    let editContact = document.querySelector("#editContact");
-    //addContactNames(firstname.value, lastname.value, contact.value);
-    editContainer.style.display = "none";
-    console.log(editContact.value);
-    let numPosition = editPosition.value;
-    if (editFirstName.value === "") {
-        editFirstName.value = contactNames[numPosition-1].firstname;
-    } 
-    if (editLastName.value === "") {
-        editLastName.value = contactNames[numPosition-1].lastname;
-    } 
-    if (editContact.value === "") {
-        editContact.value = contactNames[numPosition-1].contact;
-        console.log(editContact.value)
-    }
-    console.log(numPosition)
-    editContactName(numPosition, editFirstName.value, editLastName.value, editContact.value);
-    console.log(contactNames)
-    displayNames();
-    editPosition.value = null;
-    editFirstName.value = null;
-    editLastName.value = null;
-    editContact.value = null;
-
-});
-
-// Delete functionality
-deleteButton.addEventListener("click", function () {
-    deleteContainer.style.display = "block";
-    addContainer.style.display = "none";
-    editContainer.style.display = "none";
-});
-
-deleteName.addEventListener("click", function () {
-    const deletePosition = document.querySelector("#delete-position");
-    deleteContactName(deletePosition.value);
-    deleteContainer.style.display = "none";
-    displayNames();
-    deletePosition.value = "";
-})
-
-
-
-
-
-
-displayNames();
+kwageiFacebook.displayNames();
 
 
