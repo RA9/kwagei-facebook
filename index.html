@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,12 @@
     <link rel="stylesheet" href="style.css">
     <title>Kwagei Facebook</title>
 </head>
+
 <body>
     <div class="container">
         <h1>Kwagei Facebook</h1>
         <div id="buttons">
             <button id="add-contact" onclick="kwageiFacebook.addButtonHandler()">Add New Contact</button>
-            <button id="edit-contact" onclick="kwageiFacebook.editButtonHandler()">Edit</button>
-            <button id="delete-contact" onclick="kwageiFacebook.deleteButtonHandler()">Delete</button>
         </div>
 
         <div id="add" class="hide">
@@ -23,27 +23,34 @@
             <button id="add-name" onclick="kwageiFacebook.addContactHandler()">Add</button>
         </div>
         <div id="delete" class="hide">
-                <input type="number" id="delete-position" placeholder="Enter the delete position">
-                <button id="delete-name" onclick="kwageiFacebook.deleteContactHandler()">Delete</button>
+            <input type="number" id="delete-position" placeholder="Enter the delete position">
+            <button id="delete-name" onclick="kwageiFacebook.deleteContactHandler()">Delete</button>
         </div>
         <div id="edit" class="hide">
-                <input type="number" id="edit-position" placeholder="Enter the position to edit">
-                <input type="text" id="edit-firstname" placeholder="Enter your firstname">
-                <input type="text" id="edit-lastname" placeholder="Enter your lastname">
-                <input type="text" id="editContact" placeholder="Enter your Contact">
-                <button id="edit-name" onclick="kwageiFacebook.editContactHandler()">Edit</button>
+            <input type="number" id="edit-position" placeholder="Enter the position to edit">
+            <input type="text" id="edit-firstname" placeholder="Enter your firstname">
+            <input type="text" id="edit-lastname" placeholder="Enter your lastname">
+            <input type="text" id="editContact" placeholder="Enter your Contact">
+            <button id="edit-name" onclick="kwageiFacebook.editContactHandler()">Edit</button>
         </div>
 
-        <table border="1" id="table-container">
-            <thead>
-                <th>No</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Contact</th>
-            </thead>
-            <tbody id="add-row"></tbody>
-        </table>
+        <div class="table-container">
+            <table border="1" id="table-container">
+                <thead>
+                    <th>No</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Contact</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    <div id="add-row"></div>
+                </tbody>
+            </table>
+        </div>
+
     </div>
     <script src="main.js"></script>
 </body>
+
 </html>
