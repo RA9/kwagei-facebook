@@ -1,5 +1,5 @@
-const tableContainer = document.querySelector("#add-row");
-const trContainer = document.querySelector("tr");
+const tableContainer = document.querySelector("#table-container");
+//const trContainer = document.querySelector("tr");
 
 // Add elements
 const addButton = document.querySelector("#add-contact");
@@ -23,29 +23,26 @@ const kwageiFacebook = {
         { id: 2, firstname: "Emmanuel", lastname: "Jaygbay", contact: "0776728619" },
         { id: 3, firstname: "Rudeen", lastname: "Zarwolo", contact: "0776728619" },
         { id: 4, firstname: "Carlos", lastname: "Nah", contact: "0776728619" },
-        { id: 5, firstname: "Kpetermani", lastname: "Siakor", contact: "0776728619" }
+        { id: 5, firstname: "Kpetermani", lastname: "Siakor", contact: "0776728619" },
+        { id: 6, firstname: "Blessing", lastname: "Boslah", contact: "0776728619" }
     ],
     "displayNames": function () {
-        let countNo = 0;
-        tableContainer.innerHTML = ' ';
-        for (let i = 0; i < this.contactNames.length; i++) {
-            const element = this.contactNames[i];
-            countNo += 1
+        tableContainer.innerHTML = "";
+        this.contactNames.forEach((contact, i) => {
             tableContainer.innerHTML += `
-            <div id=${countNo}>
-            <tr>
-                <td>${countNo}</td>
-                <td>${element.firstname}</td>
-                <td>${element.lastname}</td>
-                <td>${element.contact}</td>
+                <tr id='${i}'>
+                <td>${i+1}</td>
+                <td>${contact.firstname}</td>
+                <td>${contact.lastname}</td>
+                <td>${contact.contact}</td>
                 <td>
-                <button type="button" id="edit-contact">Edit</button>
-                <button type="button" id="delete-contact">Delete</button>
+                <button type="button" data-id='${i}' id="edit-contact">Edit</button>
+                <button type="button" data-num='${i}' id="delete-contact">Delete</button>
                 </td>
-            </tr>
-            </div>
+                </tr>
+                
             `;
-        };
+        });
     },
     "addButtonHandler": function () {
         addContainer.classList.remove("hide");
@@ -91,8 +88,6 @@ const kwageiFacebook = {
         editContainer.classList.add("show");
         addContainer.classList.add("hide");
         addContainer.classList.remove("show");
-        deleteContainer.classList.add("hide");
-        deleteContainer.classList.remove("show");
     },
     "editContactHandler": function () {
         let editPosition = document.querySelector("#edit-position");
@@ -101,8 +96,8 @@ const kwageiFacebook = {
         let editContact = document.querySelector("#editContact");
         editContainer.classList.add("hide");
         editContainer.classList.remove("show");
-        console.log(editContact.value);
-        let numPosition = editPosition.value - 1;
+        console.log(editPosition.value);
+        let numPosition = parseInt(editPosition.value)-1;
         if (editFirstName.value === "") {
             editFirstName.value = this.contactNames[numPosition].firstname;
         }
@@ -129,7 +124,7 @@ const kwageiFacebook = {
         addContainer.classList.remove("show");
     },
     "deleteContactName": function (position) {
-        this.contactNames.splice(parseInt(position, 10) - 1, 1)
+        this.contactNames.splice(parseInt(position), 1)
         this.displayNames();
     }
 }
@@ -143,7 +138,8 @@ tableContainer.addEventListener("click", (e) => {
     const elementClick = e.target;
     if(elementClick.id === "delete-contact") {
         kwageiFacebook.deleteButtonHandler();
-        kwageiFacebook.deleteContactName(elementClick.parentNode.id);
+        console.log(elementClick.getAttribute('data-num'))
+        kwageiFacebook.deleteContactName(elementClick.getAttribute('data-num'));
     }
 
     if(elementClick.id === "edit-contact") {
@@ -152,8 +148,10 @@ tableContainer.addEventListener("click", (e) => {
         let editFirstName = document.querySelector("#edit-firstname");
         let editLastName = document.querySelector("#edit-lastname");
         let editContact = document.querySelector("#editContact");
+        const dataId = elementClick.getAttribute('data-id')
 
-        let editContactInformation = kwageiFacebook.contactNames[elementClick.parentNode.id -1];
+        let editContactInformation = kwageiFacebook.contactNames[parseInt(dataId)];
+        console.log(editContactInformation)
         editPosition.value = editContactInformation.id;
         editFirstName.value = editContactInformation.firstname;
         editLastName.value = editContactInformation.lastname;

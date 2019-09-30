@@ -19,7 +19,7 @@ table {
     max-width: 100%;
     margin-bottom: 1rem;
     background-color: transparent;
-    position: relative;
+    border: 1;
 }
 table, th, td {
     border: 1px solid black;
@@ -29,13 +29,13 @@ th, td {
     padding: 5px;
     text-align: left;
 }
-table#table-container tr:nth-child(even) {
+table tr:nth-child(even) {
     background-color: #eee;
 }
-table#table-container tr:nth-child(odd) {
+table tr:nth-child(odd) {
    background-color:#fff;
 }
-table#table-container th	{
+table th	{
     background-color: steelblue;
     border: 1px solid black;
     color: white;
@@ -91,13 +91,13 @@ button:hover {
     text-align: center;
 }
 
-div#add-row {
+/* div#add-row {
     display: table;
     position: absolute;
     z-index: auto;
     margin-top: 40px;
     padding: 40px;
-}
+} */
 
 
 .table-container {
